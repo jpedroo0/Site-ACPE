@@ -3,36 +3,51 @@ import React from 'react'
 function Services() {
   const services = [
     {
-      title: 'Consultoria',
-      description: 'Oferecemos consultoria especializada para ajudar seu negócio a crescer.',
-      features: ['Análise de mercado', 'Estratégias personalizadas', 'Acompanhamento contínuo']
+      title: 'Plano de negócios',
+      description: 'Transformamos ideias em projetos estruturados. Elaboramos desde o posicionamento estratégico até o plano de marketing operacional, com estudos de viabilidade, objetivos claros e projeções para curto, médio e longo prazo.  ',
+      icon: '📊',
+      iconBg: 'blue'
     },
     {
-      title: 'Desenvolvimento',
-      description: 'Criamos soluções tecnológicas sob medida para suas necessidades.',
-      features: ['Web e Mobile', 'Sistemas personalizados', 'Manutenção e suporte']
+      title: 'Comex',
+      description: 'Leve sua marca para o mundo. Estruturamos sua operação internacional com times de alta performance prontos para novos mercados.',
+      icon: '🌐',
+      iconBg: 'blue'
     },
     {
-      title: 'Design',
-      description: 'Designs modernos e funcionais que comunicam sua marca.',
-      features: ['Identidade visual', 'UI/UX Design', 'Material gráfico']
+      title: 'Gestão Financeira',
+      description: 'Tenha controle total do seu lucro. Saia do escuro com uma gestão inteligente que maximiza sua rentabilidade e proteja seu caixa.',
+      icon: '$',
+      iconBg: 'yellow'
+    },
+    {
+      title: 'Plano de Marketing',
+      description: 'Atraia os clientes certos. Estratégias poderosas para posicionar sua marca, engajar seu público e alavancar suas vendas.',
+      icon: '💼',
+      iconBg: 'yellow'
     }
   ]
 
   return (
-    <section id="servicos" className="section">
-      <span className="eyebrow">Nossos Serviços</span>
-      <h2>O que oferecemos</h2>
-      <div className="cards-grid">
+    <section id="servicos" className="section services">
+      <div className="services__header">
+        <div className="services__badge">Nossos Serviços</div>
+        <h2 className="services__title">Conheça Alguns dos Nossos Serviços</h2>
+        <p className="services__description">
+          Oferecemos uma gama completa de serviços de consultoria para otimizar processos e maximizar resultados
+        </p>
+      </div>
+      <div className="services__grid">
         {services.map((service, index) => (
-          <div key={index} className="card">
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-            <ul>
-              {service.features.map((feature, idx) => (
-                <li key={idx}>{feature}</li>
-              ))}
-            </ul>
+          <div key={index} className="service-card">
+            <div className={`service-card__icon service-card__icon--${service.iconBg}`}>
+              {service.icon}
+            </div>
+            <h3 className="service-card__title">{service.title}</h3>
+            <p className="service-card__description">{service.description}</p>
+            <a href="#" className="service-card__link">
+              Saiba mais →
+            </a>
           </div>
         ))}
       </div>
@@ -41,4 +56,8 @@ function Services() {
 }
 
 export default Services
+
+
+
+
 
