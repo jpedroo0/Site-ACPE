@@ -8,7 +8,6 @@ function Navbar() {
       </div>
       <div className="navbar__nav">
         <a href="#inicio" className="navbar__link">Início</a>
-        <a href="#sobre" className="navbar__link">Sobre</a>
         <a href="#servicos" className="navbar__link">Soluções</a>
         <a href="#equipe" className="navbar__link">Blog</a>
         <a href="#contato" className="navbar__link">Acervo digital</a>
@@ -19,6 +18,8 @@ function Navbar() {
 }
 
 export default Navbar
+
+
 
 
 

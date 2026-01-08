@@ -44,8 +44,26 @@ function Services() {
               {service.icon}
             </div>
             <h3 className="service-card__title">{service.title}</h3>
-            <p className="service-card__description">{service.description}</p>
-            <a href="#" className="service-card__link">
+            <p className="service-card__description">
+              {service.description.split('. ').map((sentence, idx, arr) => {
+                const isLast = idx === arr.length - 1;
+                const hasPeriod = sentence.endsWith('.');
+                const cleanSentence = hasPeriod ? sentence.slice(0, -1) : sentence;
+                
+                return idx === 0 ? (
+                  <React.Fragment key={idx}>
+                    <strong>{cleanSentence}</strong>
+                    {!isLast && '. '}
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment key={idx}>
+                    {cleanSentence}
+                    {!isLast && '. '}
+                  </React.Fragment>
+                );
+              })}
+            </p>
+            <a href="#" className={`service-card__link service-card__link--${service.iconBg}`}>
               Saiba mais →
             </a>
           </div>
