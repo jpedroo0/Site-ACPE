@@ -1,0 +1,28 @@
+/* Contact Section */
+#contato {
+  padding: 5rem 0;
+  background: #fff;
+}
+
+#contato h2 {
+  font-family: 'League Gothic', sans-serif;
+  font-weight: 400;
+  font-size: 4rem;
+  line-height: 1.2;
+  color: #000;
+  margin: 0 0 2rem 0;
+}
+
+#contato label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  #contato h2 {
+    font-size: 2rem;
+  }
+}

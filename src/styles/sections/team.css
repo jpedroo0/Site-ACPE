@@ -1,0 +1,104 @@
+/* Team Section */
+#equipe {
+  padding: 5rem 0;
+  background: #fff;
+}
+
+.team__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.team__header .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.team__header .eyebrow svg {
+  color: #3b82f6;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+}
+
+.team__header .eyebrow svg path {
+  fill: #3b82f6;
+}
+
+#equipe h2 {
+  font-family: 'League Gothic', sans-serif;
+  font-weight: 400;
+  font-size: 4rem;
+  line-height: 1.2;
+  color: #000;
+  margin: 1rem 0 2rem 0;
+}
+
+.team-card h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e3a8a;
+  margin: 0 0 0.5rem 0;
+}
+
+.team-card p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.team__features {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.team__features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.team__feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #64748b;
+}
+
+.team__check-icon {
+  color: #EFC11D;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+}
+
+.team__check-icon path {
+  fill: #EFC11D;
+}
+
+@media (max-width: 768px) {
+  #equipe h2 {
+    font-size: 2rem;
+  }
+
+  .team__features-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

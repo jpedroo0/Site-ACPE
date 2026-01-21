@@ -1,29 +1,31 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartLine, faGlobe, faDollarSign, faBriefcase, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 function Services() {
   const services = [
     {
       title: 'Plano de negócios',
-      description: 'Transformamos ideias em projetos estruturados. Elaboramos desde o posicionamento estratégico até o plano de marketing operacional, com estudos de viabilidade, objetivos claros e projeções para curto, médio e longo prazo.  ',
-      icon: '📊',
+      description: 'Transformamos ideias em projetos estruturados. Elaboramos desde o posicionamento estratégico até o plano de marketing operacional, com estudos de viabilidade, objetivos claros e projeções para curto, médio e longo prazo.  ',
+      icon: <FontAwesomeIcon icon={faChartLine} />,
       iconBg: 'blue'
     },
     {
       title: 'Comex',
       description: 'Leve sua marca para o mundo. Estruturamos sua operação internacional com times de alta performance prontos para novos mercados.',
-      icon: '🌐',
+      icon: <FontAwesomeIcon icon={faGlobe} />,
       iconBg: 'blue'
     },
     {
       title: 'Gestão Financeira',
       description: 'Tenha controle total do seu lucro. Saia do escuro com uma gestão inteligente que maximiza sua rentabilidade e proteja seu caixa.',
-      icon: '$',
+      icon: <FontAwesomeIcon icon={faDollarSign} />,
       iconBg: 'yellow'
     },
     {
       title: 'Plano de Marketing',
       description: 'Atraia os clientes certos. Estratégias poderosas para posicionar sua marca, engajar seu público e alavancar suas vendas.',
-      icon: '💼',
+      icon: <FontAwesomeIcon icon={faBriefcase} />,
       iconBg: 'yellow'
     }
   ]
@@ -64,7 +66,7 @@ function Services() {
               })}
             </p>
             <a href="#" className={`service-card__link service-card__link--${service.iconBg}`}>
-              Saiba mais →
+              Saiba mais <FontAwesomeIcon icon={faArrowRight} />
             </a>
           </div>
         ))}

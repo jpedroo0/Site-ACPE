@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGears } from '@fortawesome/free-solid-svg-icons'
 
 function Testimonials() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [dragOffset, setDragOffset] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(true)
   const carouselRef = useRef(null)
 
   const testimonials = [
@@ -35,60 +38,115 @@ function Testimonials() {
       name: 'Roberto Mendes',
       role: 'Diretor Comercial, GlobalTrade',
       avatar: '👨'
+    },
+    {
+      category: 'Consultoria Estratégica',
+      quote: 'A parceria com a ACPE foi transformadora. Sua abordagem estratégica nos permitiu identificar oportunidades que não estávamos vendo.',
+      name: 'Patricia Costa',
+      role: 'Diretora Executiva, InnovateNow',
+      avatar: '👩'
+    },
+    {
+      category: 'Transformação Digital',
+      quote: 'A ACPE nos guiou em nossa jornada de transformação digital. Hoje somos uma empresa muito mais eficiente e competitiva.',
+      name: 'Ricardo Almeida',
+      role: 'CTO, DigitalFirst',
+      avatar: '👨'
+    },
+    {
+      category: 'Gestão de Projetos',
+      quote: 'A metodologia da ACPE para gestão de projetos é excepcional. Conquistamos resultados que superaram todas as expectativas.',
+      name: 'Fernanda Lima',
+      role: 'Gerente de Projetos, ProActive Solutions',
+      avatar: '👩'
+    },
+    {
+      category: 'Análise de Dados',
+      quote: 'Com a ajuda da ACPE, transformamos nossos dados em insights valiosos. Nossa tomada de decisão nunca foi tão precisa.',
+      name: 'Lucas Martins',
+      role: 'Diretor de Analytics, DataDriven Corp',
+      avatar: '👨'
     }
   ]
 
-  // Para mostrar 2 cards por vez, calculamos quantos slides podemos ter
-  // Com cards de 35%, podemos mostrar aproximadamente 2.8 cards, então fazemos loop
-  const maxSlides = testimonials.length - 1
+  const totalSlides = testimonials.length
+  
+  // Duplica os cards para criar loop infinito (3 cópias)
+  const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials]
+  
+  // Inicializa começando no meio (segunda cópia)
+  useEffect(() => {
+    setCurrentSlide(totalSlides)
+  }, [totalSlides])
   
   const goToSlide = (index) => {
-    // Loop: se passar do fim, volta ao início; se passar do início, vai ao fim
-    if (index > maxSlides) {
-      setCurrentSlide(0)
-    } else if (index < 0) {
-      setCurrentSlide(maxSlides)
-    } else {
-      setCurrentSlide(index)
-    }
+    setIsTransitioning(true)
+    // Mapeia o índice clicado para a posição na segunda cópia
+    setCurrentSlide(totalSlides + index)
     setDragOffset(0)
   }
 
   const nextSlide = () => {
-    if (currentSlide >= maxSlides) {
-      setCurrentSlide(0)
-    } else {
-      setCurrentSlide(currentSlide + 1)
-    }
+    setIsTransitioning(true)
+    setCurrentSlide(prev => {
+      const next = prev + 1
+      // Se chegou ao final da segunda cópia, pula instantaneamente para o início da segunda cópia
+      if (next >= totalSlides * 2) {
+        setTimeout(() => {
+          setIsTransitioning(false)
+          setCurrentSlide(totalSlides)
+          setTimeout(() => setIsTransitioning(true), 10)
+        }, 300)
+        return totalSlides * 2 - 1
+      }
+      return next
+    })
     setDragOffset(0)
   }
 
   const prevSlide = () => {
-    if (currentSlide <= 0) {
-      setCurrentSlide(maxSlides)
-    } else {
-      setCurrentSlide(currentSlide - 1)
-    }
+    setIsTransitioning(true)
+    setCurrentSlide(prev => {
+      const prevSlide = prev - 1
+      // Se chegou ao início da segunda cópia, pula instantaneamente para o final da segunda cópia
+      if (prevSlide < totalSlides) {
+        setTimeout(() => {
+          setIsTransitioning(false)
+          setCurrentSlide(totalSlides * 2 - 1)
+          setTimeout(() => setIsTransitioning(true), 10)
+        }, 300)
+        return totalSlides
+      }
+      return prevSlide
+    })
     setDragOffset(0)
   }
 
-  // Calcula o deslocamento: cada card tem 35% + gap de 2rem (1rem de cada lado)
+  // Calcula o deslocamento: cada card tem 380px + gap de 2rem
   const getTransform = () => {
-    let baseTransform = 'translateX(0)'
+    const cardWidth = 380 // largura fixa do card
+    const gap = 32 // 2rem = 32px
+    const slideWidth = cardWidth + gap
     
-    if (currentSlide > 0) {
-      // Move 35% por slide + gap de 1rem por slide
-      const percentage = currentSlide * 35
-      const gap = currentSlide * 1
-      baseTransform = `translateX(calc(-${percentage}% - ${gap}rem))`
-    }
+    // Calcula a posição baseada no índice atual
+    let baseTransform = currentSlide * slideWidth
     
     // Adiciona o offset do drag em pixels
     if (isDragging && dragOffset !== 0) {
-      return `${baseTransform} translateX(${dragOffset}px)`
+      baseTransform = baseTransform + dragOffset
     }
     
-    return baseTransform
+    return `translateX(-${baseTransform}px)`
+  }
+  
+  // Calcula o índice real para mostrar nas bolinhas
+  const getRealIndex = () => {
+    // Se está na segunda cópia, calcula o índice real
+    if (currentSlide >= totalSlides && currentSlide < totalSlides * 2) {
+      return currentSlide - totalSlides
+    }
+    // Se está na primeira ou terceira cópia, também calcula corretamente
+    return currentSlide % totalSlides
   }
 
   // Drag functionality - cards seguem o mouse em tempo real
@@ -99,34 +157,20 @@ function Testimonials() {
   }
 
   const handleMouseUp = (e) => {
-    if (!isDragging) return
-    
-    const threshold = 100 // Minimum drag distance in pixels to trigger slide change
-    const currentX = e?.pageX || e?.clientX || startX
-    const diff = startX - currentX
-    
-    if (Math.abs(diff) > threshold) {
-      if (diff > 0) {
-        // Dragged left, go to next
-        nextSlide()
-      } else {
-        // Dragged right, go to previous
-        prevSlide()
-      }
-    } else {
-      // Snap back to current slide
-      setDragOffset(0)
+    // O handler global cuida da lógica principal
+    // Este apenas garante que o estado seja resetado se necessário
+    if (isDragging) {
+      setIsDragging(false)
     }
-    
-    setIsDragging(false)
   }
 
   const handleMouseMove = (e) => {
     if (!isDragging) return
+    e.preventDefault()
     
     const diff = startX - e.pageX
     // Limita o drag para não ultrapassar muito os limites
-    const maxDrag = carouselRef.current?.offsetWidth ? carouselRef.current.offsetWidth * 0.3 : 200
+    const maxDrag = 300 // Limite máximo de arrasto em pixels
     const limitedDiff = Math.max(-maxDrag, Math.min(maxDrag, diff))
     setDragOffset(-limitedDiff)
   }
@@ -136,46 +180,41 @@ function Testimonials() {
     if (!isDragging) return
     
     const handleGlobalMouseMove = (e) => {
+      e.preventDefault()
       const diff = startX - e.pageX
-      const maxDrag = carouselRef.current?.offsetWidth ? carouselRef.current.offsetWidth * 0.3 : 200
+      const maxDrag = 300 // Limite máximo de arrasto em pixels
       const limitedDiff = Math.max(-maxDrag, Math.min(maxDrag, diff))
       setDragOffset(-limitedDiff)
     }
     
     const handleGlobalMouseUp = (e) => {
-      const threshold = 100
+      const threshold = 80 // Threshold reduzido para melhor responsividade
       const currentX = e?.pageX || e?.clientX || startX
       const diff = startX - currentX
       
       if (Math.abs(diff) > threshold) {
         if (diff > 0) {
           // Dragged left, go to next
-          if (currentSlide >= maxSlides) {
-            setCurrentSlide(0)
-          } else {
-            setCurrentSlide(currentSlide + 1)
-          }
+          nextSlide()
         } else {
           // Dragged right, go to previous
-          if (currentSlide <= 0) {
-            setCurrentSlide(maxSlides)
-          } else {
-            setCurrentSlide(currentSlide - 1)
-          }
+          prevSlide()
         }
+      } else {
+        // Snap back to current slide
+        setDragOffset(0)
       }
-      setDragOffset(0)
       setIsDragging(false)
     }
     
-    document.addEventListener('mousemove', handleGlobalMouseMove)
+    document.addEventListener('mousemove', handleGlobalMouseMove, { passive: false })
     document.addEventListener('mouseup', handleGlobalMouseUp)
     
     return () => {
       document.removeEventListener('mousemove', handleGlobalMouseMove)
       document.removeEventListener('mouseup', handleGlobalMouseUp)
     }
-  }, [isDragging, startX, currentSlide, maxSlides])
+  }, [isDragging, startX, currentSlide, totalSlides])
 
   // Touch events for mobile
   const handleTouchStart = (e) => {
@@ -189,7 +228,7 @@ function Testimonials() {
     e.preventDefault()
     
     const diff = startX - e.touches[0].pageX
-    const maxDrag = carouselRef.current?.offsetWidth ? carouselRef.current.offsetWidth * 0.3 : 200
+    const maxDrag = 300 // Limite máximo de arrasto
     const limitedDiff = Math.max(-maxDrag, Math.min(maxDrag, diff))
     setDragOffset(-limitedDiff)
   }
@@ -197,7 +236,7 @@ function Testimonials() {
   const handleTouchEnd = (e) => {
     if (!isDragging) return
     
-    const threshold = 100
+    const threshold = 80
     const diff = startX - e.changedTouches[0].pageX
     
     if (Math.abs(diff) > threshold) {
@@ -223,18 +262,21 @@ function Testimonials() {
       <div className="testimonials__carousel-container">
         <div 
           ref={carouselRef}
-          className={`testimonials__carousel ${isDragging ? 'dragging' : ''}`}
+          className={`testimonials__carousel ${isDragging ? 'dragging' : ''} ${!isTransitioning ? 'no-transition' : ''}`}
           style={{ transform: getTransform() }}
           onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {testimonials.map((testimonial, index) => (
+          {duplicatedTestimonials.map((testimonial, index) => (
             <div key={index} className="testimonial-card">
               <div className="testimonial-card__header">
-                <div className="testimonial-card__icon">⚙️</div>
+                <div className="testimonial-card__icon">
+                  <FontAwesomeIcon icon={faGears} />
+                </div>
                 <h3 className="testimonial-card__category">{testimonial.category}</h3>
               </div>
               <p className="testimonial-card__quote">"{testimonial.quote}"</p>
@@ -267,8 +309,11 @@ function Testimonials() {
           {testimonials.map((_, index) => (
             <button
               key={index}
-              className={`testimonials__dot ${index === currentSlide ? 'testimonials__dot--active' : ''}`}
-              onClick={() => goToSlide(index)}
+              className={`testimonials__dot ${index === getRealIndex() ? 'testimonials__dot--active' : ''}`}
+              onClick={() => {
+                setIsTransitioning(true)
+                goToSlide(index)
+              }}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

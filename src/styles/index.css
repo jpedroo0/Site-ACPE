@@ -1,0 +1,17 @@
+/* Importações de estilos base */
+@import './base.css';
+
+/* Importações de utilitários */
+@import './utilities/buttons.css';
+@import './utilities/cards.css';
+
+/* Importações de componentes */
+@import './components/navbar.css';
+@import './components/footer.css';
+
+/* Importações de seções */
+@import './sections/hero.css';
+@import './sections/services.css';
+@import './sections/about.css';
+@import './sections/testimonials.css';
+@import './sections/contact.css';

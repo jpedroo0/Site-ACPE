@@ -1,5 +1,9 @@
 
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLinkedin, faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faLocationDot, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
+import logo from '../assets/illustrations/logo.png'
 
 function Footer() {
   return (
@@ -8,7 +12,9 @@ function Footer() {
         <div className="footer__column footer__column--brand">
           <div className="footer__brand-header">
             <div className="footer__logo">
-              <span className="footer__logo-icon">ACPE</span>
+              <div className="footer__logo-container">
+                <img src={logo} alt="ACPE Consultoria" className="footer__logo-icon" />
+              </div>
             </div>
             <h3 className="footer__brand-name">ACPE Consultoria</h3>
           </div>
@@ -16,9 +22,15 @@ function Footer() {
             Empresa júnior comprometida em oferecer soluções inovadoras e de qualidade.
           </p>
           <div className="footer__social">
-            <a href="#" className="footer__social-link">FB</a>
-            <a href="#" className="footer__social-link">IG</a>
-            <a href="#" className="footer__social-link">LI</a>
+            <a href="#" className="footer__social-link">
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+            <a href="#" className="footer__social-link">
+              <FontAwesomeIcon icon={faInstagram} />
+            </a>
+            <a href="#" className="footer__social-link">
+              <FontAwesomeIcon icon={faFacebook} />
+            </a>
           </div>
         </div>
         
@@ -36,18 +48,40 @@ function Footer() {
           <h4 className="footer__title">Contato</h4>
           <ul className="footer__list footer__list--contact">
             <li className="footer__contact-item">
-              <span className="footer__contact-icon material-symbols-rounded">email</span>
+              <span className="footer__contact-icon">
+                <FontAwesomeIcon icon={faLocationDot} />
+              </span>
               <span>Ver no Google Maps</span>
             </li>
             <li className="footer__contact-item">
-              <span className="footer__contact-icon material-symbols-rounded">phone</span>
-              <span> contato@acpeconsultoria.com.br</span>
+              <span className="footer__contact-icon">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </span>
+              <span>contato@acpeconsultoria.com.br</span>
             </li>
             <li className="footer__contact-item">
-              <span className="footer__contact-icon material-symbols-rounded">location_on</span>
+              <span className="footer__contact-icon">
+                <FontAwesomeIcon icon={faPhone} />
+              </span>
               <span>(34) 99695 2868</span>
             </li>
           </ul>
+        </div>
+        
+        <div className="footer__column footer__column--map">
+          <div className="footer__map-container">
+            <iframe
+              className="footer__map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4708.035022178115!2d-48.26074948837954!3d-18.918503882179884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94a44574eb2d5de3%3A0x11d136c87e5645a1!2sACPE%20Consultoria%20-%20Plano%20de%20Neg%C3%B3cios%2C%20Pesquisa%20de%20Mercado%20e%20Gest%C3%A3o%20Empresarial!5e1!3m2!1spt-PT!2sbr!4v1768957644175!5m2!1spt-PT!2sbr" 
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Localização ACPE Consultoria"
+            ></iframe>
+          </div>
         </div>
         
         <div className="footer__column">

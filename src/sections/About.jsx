@@ -1,4 +1,6 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faUsers, faRocket, faAward, faHandshake, faGears } from '@fortawesome/free-solid-svg-icons'
 
 function About() {
   return (
@@ -16,7 +18,7 @@ function About() {
           <div className="about__features">
             <div className="about__feature">
               <div className="about__feature-icon">
-                <span>✓</span>
+                <FontAwesomeIcon icon={faCheck} />
               </div>
               <div className="about__feature-text">
                 <h3>Metodologia Comprovada</h3>
@@ -25,7 +27,7 @@ function About() {
             </div>
             <div className="about__feature">
               <div className="about__feature-icon">
-                <span>👥</span>
+                <FontAwesomeIcon icon={faUsers} />
               </div>
               <div className="about__feature-text">
                 <h3>Equipe Especializada</h3>
@@ -85,22 +87,30 @@ function About() {
         </p>
         <div className="about__benefits-grid">
           <div className="about__benefit-card">
-            <div className="about__benefit-icon">🚀</div>
+            <div className="about__benefit-icon">
+              <FontAwesomeIcon icon={faRocket} />
+            </div>
             <h3>Resultados Rápidos</h3>
             <p>Metodologias ágeis para implementação eficiente e resultados mensuráveis em curto prazo.</p>
           </div>
           <div className="about__benefit-card">
-            <div className="about__benefit-icon">🔒</div>
+            <div className="about__benefit-icon">
+              <FontAwesomeIcon icon={faAward} />
+            </div>
             <h3>Qualidade Garantida</h3>
             <p>Certificações internacionais e equipe altamente qualificada para entregar excelência.</p>
           </div>
           <div className="about__benefit-card">
-            <div className="about__benefit-icon">🤝</div>
+            <div className="about__benefit-icon">
+              <FontAwesomeIcon icon={faHandshake} />
+            </div>
             <h3>Parceria de Longo Prazo</h3>
             <p>Relacionamento duradouro com suporte contínuo e acompanhamento de resultados.</p>
           </div>
           <div className="about__benefit-card">
-            <div className="about__benefit-icon">⚙️</div>
+            <div className="about__benefit-icon">
+              <FontAwesomeIcon icon={faGears} />
+            </div>
             <h3>Soluções Personalizadas</h3>
             <p>Cada projeto é único e desenvolvido sob medida para as necessidades do seu negócio.</p>
           </div>
