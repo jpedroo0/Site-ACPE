@@ -229,12 +229,13 @@
   text-transform: uppercase;
   width: fit-content;
   font-size: 0.9rem;
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .footer__blog-cta:hover {
-  background: #1e3a8a;
-  transition: background 0.3s;
+  background-color: #fff;
+ color: #26437b;
+ transition: all 0.3s;
 }
 
 .footer__copyright {

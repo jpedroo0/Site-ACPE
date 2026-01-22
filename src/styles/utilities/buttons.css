@@ -22,12 +22,14 @@
 
 .btn--primary:hover {
   background: #1e3a8a;
+  transition: all 0.3s;
 }
 
 .btn--secondary {
   background: #fff;
   color: #374151;
   border: 2px solid #E5E7EB;
+  transition: all 0.3s;
 }
 
 .btn--secondary:hover {
@@ -53,8 +55,9 @@
 }
 
 .btn--about:hover {
-  opacity: 0.8;
-  transition: opacity 0.3s;
+  background-color: #fff;
+ color: #26437b;
+ transition: all 0.3s;
 }
 
 /*.btn--about:hover {
