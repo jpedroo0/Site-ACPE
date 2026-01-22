@@ -1,8 +1,72 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faUsers, faRocket, faAward, faHandshake, faGears } from '@fortawesome/free-solid-svg-icons'
 
+// Imagens para o carrossel da seção About
+import a1 from '../assets/fotos/IMG_9360.JPG'
+import a2 from '../assets/fotos/IMG_9356.JPG'
+import a3 from '../assets/fotos/IMG_9353.JPG'
+import a4 from '../assets/fotos/IMG_8383.JPG'
+import a5 from '../assets/fotos/56B1754B-A2A6-4DDF-85DA-115DE9C7EA50.jpeg'
+import a6 from '../assets/fotos/3480A4F7-51F2-4484-A534-595DA12F535E.jpeg'
+import a7 from '../assets/fotos/IMG_1111.png'
+
 function About() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(true)
+  const carouselRef = useRef(null)
+  const [slideWidth, setSlideWidth] = useState(0)
+
+  const photos = [a1, a2, a3, a4, a5, a6, a7]
+  const totalSlides = photos.length
+  const gapSize = 24 // gap em pixels
+
+  const duplicatedPhotos = [...photos, ...photos, ...photos]
+
+  // inicia no meio (segunda cópia)
+  useEffect(() => {
+    setCurrentIndex(totalSlides)
+  }, [totalSlides])
+
+  // calcula largura do slide (container + gap)
+  useEffect(() => {
+    const calculate = () => {
+      if (carouselRef.current) {
+        const containerWidth = carouselRef.current.parentElement.clientWidth
+        setSlideWidth(containerWidth + gapSize)
+      }
+    }
+    calculate()
+    window.addEventListener('resize', calculate)
+    return () => window.removeEventListener('resize', calculate)
+  }, [])
+
+  const getRealIndex = () => currentIndex % totalSlides
+
+  const goToSlide = (index) => {
+    setIsTransitioning(true)
+    setCurrentIndex(totalSlides + index)
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => {
+        const next = prev + 1
+        if (next >= totalSlides * 2) {
+          setTimeout(() => {
+            setIsTransitioning(false)
+            setCurrentIndex(totalSlides)
+            setTimeout(() => setIsTransitioning(true), 20)
+          }, 600)
+          return next
+        }
+        return next
+      })
+    }, 4000)
+
+    return () => clearInterval(interval)
+  }, [totalSlides])
+
   return (
     <section id="sobre" className="section about">
       {/* Seção 1: Conheça Nossa Empresa */}
@@ -39,14 +103,33 @@ function About() {
         </div>
         <div className="about__company-image">
           <div className="about__image-placeholder">
-            {/* Espaço para imagem */}
-          </div>
-          <div className="about__carousel-dots">
-            <span className="about__dot"></span>
-            <span className="about__dot"></span>
-            <span className="about__dot"></span>
-            <span className="about__dot"></span>
-            <span className="about__dot"></span>
+            <div
+              className="about__carousel"
+              ref={(el) => (carouselRef.current = el)}
+              style={{
+                transform: `translateX(-${currentIndex * slideWidth}px)`,
+                transition: isTransitioning ? 'transform 0.6s ease-in-out' : 'none'
+              }}
+            >
+              {duplicatedPhotos.map((photo, idx) => (
+                <img
+                  key={idx}
+                  src={photo}
+                  alt={`Sobre - Foto ${(idx % totalSlides) + 1}`}
+                  className="about__carousel-image"
+                />
+              ))}
+            </div>
+            <div className="about__dots" role="tablist" aria-label="Controles do carrossel">
+              {photos.map((_, i) => (
+                <button
+                  key={i}
+                  className={`about__dot ${getRealIndex() === i ? 'about__dot--active' : ''}`}
+                  onClick={() => goToSlide(i)}
+                  aria-label={`Ir para slide ${i + 1}`}
+                ></button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

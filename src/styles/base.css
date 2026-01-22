@@ -10,6 +10,9 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  /* Suavização do scroll com easing effect */
+  scroll-timeline: view();
 }
 
 #root {

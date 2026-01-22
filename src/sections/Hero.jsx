@@ -1,32 +1,79 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 // Importando as imagens
-import foto1 from '../assets/fotos/IMG_8501.JPG'
+import foto1 from '../assets/fotos/IMG_85011.JPG'
 import foto2 from '../assets/fotos/IMG_9351.JPG'
 import foto3 from '../assets/fotos/IMG_9369.JPG'
+import foto4 from '../assets/fotos/IMG_1111.png'
 
 function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [fadeIn, setFadeIn] = useState(true)
+  const [isTransitioning, setIsTransitioning] = useState(true)
+  const carouselRef = useRef(null)
+  const [slideWidth, setSlideWidth] = useState(0)
 
-  const photos = [foto1, foto2, foto3]
+  const photos = [foto1, foto2, foto3, foto4]
+  const totalSlides = photos.length
+  const gapSize = 24 // 1.5rem em pixels
+  
+  // Duplica os slides para criar loop infinito
+  const duplicatedPhotos = [...photos, ...photos, ...photos]
+  
+  // Inicializa começando no meio (segunda cópia)
+  useEffect(() => {
+    setCurrentImageIndex(totalSlides)
+  }, [totalSlides])
+
+  // Calcula a largura de cada slide incluindo o gap
+  useEffect(() => {
+    const calculateSlideWidth = () => {
+      if (carouselRef.current) {
+        const containerWidth = carouselRef.current.parentElement.clientWidth
+        const width = containerWidth + gapSize
+        setSlideWidth(width)
+      }
+    }
+
+    calculateSlideWidth()
+    window.addEventListener('resize', calculateSlideWidth)
+    return () => window.removeEventListener('resize', calculateSlideWidth)
+  }, [])
+
+  const getRealIndex = () => {
+    return currentImageIndex % totalSlides
+  }
+
+  const goToSlide = (index) => {
+    setIsTransitioning(true)
+    setCurrentImageIndex(totalSlides + index)
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFadeIn(false)
-      
-      setTimeout(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % photos.length)
-        setFadeIn(true)
-      }, 500) // Aguarda a transição de fade out antes de trocar a imagem
-    }, 5000) // Troca a imagem a cada 5 segundos
+      setCurrentImageIndex((prev) => {
+        const next = prev + 1
+        // Se chegar além da segunda cópia, anima até a terceira cópia e depois pula sem animação para a segunda cópia
+        if (next >= totalSlides * 2) {
+          // permite a animação até a primeira posição da terceira cópia
+          setTimeout(() => {
+            // após a animação terminar, faz o jump sem transição para a segunda cópia
+            setIsTransitioning(false)
+            setCurrentImageIndex(totalSlides)
+            // reativa transição após um pequeno delay
+            setTimeout(() => setIsTransitioning(true), 20)
+          }, 600) // espera o tempo da transição
+          return next
+        }
+        return next
+      })
+    }, 4000) // Troca a imagem a cada 4 segundos
 
     return () => {
       clearInterval(interval)
     }
-  }, [photos.length])
+  }, [totalSlides])
 
   return (
     <section id="inicio" className="section hero">
@@ -72,11 +119,33 @@ function Hero() {
       </div>
       <div className="hero__media">
         <div className="hero__image-placeholder">
-          <img 
-            src={photos[currentImageIndex]} 
-            alt={`Equipe ACPE - Foto ${currentImageIndex + 1}`}
-            className={`hero__image ${fadeIn ? 'hero__image--fade-in' : 'hero__image--fade-out'}`}
-          />
+          <div 
+            ref={carouselRef}
+            className="hero__carousel"
+            style={{
+              transform: `translateX(-${currentImageIndex * slideWidth}px)`,
+              transition: isTransitioning ? 'transform 0.6s ease-in-out' : 'none'
+            }}
+          >
+            {duplicatedPhotos.map((photo, index) => (
+              <img 
+                key={index}
+                src={photo} 
+                alt={`Equipe ACPE - Foto ${(index % totalSlides) + 1}`}
+                className="hero__carousel-image"
+              />
+            ))}
+          </div>
+        </div>
+        <div className="hero__dots" role="tablist" aria-label="Controles do carrossel">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              className={`hero__dot ${getRealIndex() === i ? 'hero__dot--active' : ''}`}
+              onClick={() => goToSlide(i)}
+              aria-label={`Ir para slide ${i + 1}`}
+            ></button>
+          ))}
         </div>
         <div className="hero__testimonial-card">
           <div className="hero__testimonial-avatars">

@@ -98,32 +98,23 @@
   justify-content: center;
   text-decoration: none;
   font-size: 0.75rem;
-  color: #fff;
+  color: #ffffff !important; /* garante branco por padrão */
   font-weight: 600;
 }
 
-.footer__social-link:hover {
-  background: #1e3a8a;
-  transition: background 0.3s;
+.footer__social-link:hover {  
+  background: #ffffff;
+  color: #26437b !important;
+  transition: background 0.3s, color 0.2s;
 }
 
-.footer__social-link svg {
-  color: #fff !important;
-  fill: #fff !important;
+.footer__social-link svg,
+.footer__social-link svg path {
+  fill: currentColor;
+  color: currentColor;
   width: 1.5em;
   height: 1.5em;
-}
-
-.footer__social-link svg path {
-  fill: #fff !important;
-}
-
-.footer__title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #fff;
+  transition: fill 0.2s, color 0.2s;
 }
 
 .footer__list {
@@ -180,11 +171,24 @@
   text-decoration: none;
   line-height: 1.5;
   transition: opacity 0.2s;
+  position: relative;
 }
 
-.footer__link:hover {
-  opacity: 0.6;
-  
+.footer__link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px; 
+  bottom: -8px;
+  left: 0;
+  background-color: #9CA3AF;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease-out;
+}
+
+.footer__link:hover::after {
+  transform: scaleX(1);
 }
 
 .footer__column--map {
@@ -230,6 +234,12 @@
   width: fit-content;
   font-size: 0.9rem;
   color: #ffffff !important;
+}
+
+.footer__blog-cta svg,
+.footer__blog-cta svg path {
+  fill: currentColor;
+  color: inherit;
 }
 
 .footer__blog-cta:hover {

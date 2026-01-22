@@ -22,13 +22,15 @@ function Footer() {
             Empresa júnior comprometida em oferecer soluções inovadoras e de qualidade.
           </p>
           <div className="footer__social">
-            <a href="#" className="footer__social-link">
+            <a href="https://www.linkedin.com/company/acpe-consultoria-jr/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BAxHp0P7%2BQaWRPFsEICFLqg%3D%3D" className="footer__social-link">
               <FontAwesomeIcon icon={faLinkedin} />
             </a>
-            <a href="#" className="footer__social-link">
+            <a href="https://www.instagram.com/acpeconsultoria?igsh=MXMyaWR5OTZtb210YQ== 
+" className="footer__social-link">
               <FontAwesomeIcon icon={faInstagram} />
             </a>
-            <a href="#" className="footer__social-link">
+            <a href="https://www.facebook.com/share/17vdtPKwg2/?mibextid=wwXIfr
+" className="footer__social-link">
               <FontAwesomeIcon icon={faFacebook} />
             </a>
           </div>
