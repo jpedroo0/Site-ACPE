@@ -92,15 +92,15 @@ function Hero() {
           Oferecemos soluções acessíveis e personalizadas, com acompanhamento próximo em cada etapa para garantir que seus objetivos sejam atingidos
         </p>
         <div className="hero__actions">
-          <button className="btn btn--primary">
+          <a className="btn btn--primary" href="#servicos">
             NOSSOS SERVICOS
             <span className="btn__arrow">
               <FontAwesomeIcon icon={faArrowRight} />
             </span>
-          </button>
-          <button className="btn btn--secondary">
+          </a>
+          <a className="btn btn--secondary" href="https://api.whatsapp.com/send?phone=5534996952868&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleAPZ9RpleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAacll4UKICtMFq3T3iTkKreOaQATXBuRSwsR621409E0OhsGY9R63JHKsU9cYg_aem_wdm5Hynuj1oUCIdXw6daYw">
             AGENDAR CONSULTA
-          </button>
+          </a>
         </div>
         <div className="hero__stats">
           <div className="hero__stat">
@@ -149,9 +149,9 @@ function Hero() {
         </div>
         <div className="hero__testimonial-card">
           <div className="hero__testimonial-avatars">
-            <div className="hero__testimonial-avatar"></div>
-            <div className="hero__testimonial-avatar"></div>
-            <div className="hero__testimonial-avatar"></div>
+            <image className="hero__testimonial-avatar" src={foto1} alt="Cliente satisfeito 1" />
+            <image className="hero__testimonial-avatar" src={foto2} alt="Cliente satisfeito 2" />   
+            <image className="hero__testimonial-avatar" src={foto2} alt="Cliente satisfeito 2" /> 
           </div>
           <div className="hero__testimonial-info">
             <div className="hero__testimonial-clients">+200 Clientes</div>

@@ -67,6 +67,43 @@ function About() {
     return () => clearInterval(interval)
   }, [totalSlides])
 
+  // animação dos números ao entrar na seção
+  const numbersRef = useRef(null)
+  useEffect(() => {
+    const nums = numbersRef.current
+    if (!nums) return
+    let animated = false
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !animated) {
+          animated = true
+          const elements = nums.querySelectorAll('.about__stat-number')
+          elements.forEach(el => {
+            const target = parseInt(el.dataset.target || '0', 10)
+            const prefix = el.dataset.prefix || ''
+            const suffix = el.dataset.suffix || ''
+            const duration = 1200 // rápido como solicitado
+            const startTime = performance.now()
+            const step = (now) => {
+              const progress = Math.min((now - startTime) / duration, 1)
+              const value = Math.floor(progress * target)
+              el.textContent = `${prefix}${value}${suffix}`
+              if (progress < 1) {
+                requestAnimationFrame(step)
+              } else {
+                el.textContent = `${prefix}${target}${suffix}`
+              }
+            }
+            requestAnimationFrame(step)
+          })
+          observer.disconnect()
+        }
+      })
+    }, { threshold: 0.25 })
+    observer.observe(nums)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section id="sobre" className="section about">
       {/* Seção 1: Conheça Nossa Empresa */}
@@ -120,34 +157,24 @@ function About() {
                 />
               ))}
             </div>
-            <div className="about__dots" role="tablist" aria-label="Controles do carrossel">
-              {photos.map((_, i) => (
-                <button
-                  key={i}
-                  className={`about__dot ${getRealIndex() === i ? 'about__dot--active' : ''}`}
-                  onClick={() => goToSlide(i)}
-                  aria-label={`Ir para slide ${i + 1}`}
-                ></button>
-              ))}
-            </div>
           </div>
         </div>
       </div>
 
       {/* Seção 2: Nossos Números */}
-      <div className="about__numbers">
+      <div className="about__numbers" ref={numbersRef}>
         <h2 className="about__section-title">Nossos Números</h2>
         <div className="about__stats-grid">
           <div className="about__stat-card">
-            <div className="about__stat-number">+22</div>
+            <div className="about__stat-number" data-target="22" data-prefix="+">0</div>
             <div className="about__stat-label">Anos de Empresa</div>
           </div>
           <div className="about__stat-card">
-            <div className="about__stat-number">+250</div>
+            <div className="about__stat-number" data-target="250" data-prefix="+">0</div>
             <div className="about__stat-label">Soluções Geradas</div>
           </div>
           <div className="about__stat-card">
-            <div className="about__stat-number">100%</div>
+            <div className="about__stat-number" data-target="100" data-suffix="%">0</div>
             <div className="about__stat-label">Satisfação do Cliente</div>
           </div>
         </div>

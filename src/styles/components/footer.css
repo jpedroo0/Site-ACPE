@@ -27,6 +27,7 @@
   gap: 1.5rem;
   color: #9CA3AF;
   margin-top: 1rem;
+  margin-left: 2rem;
 }
 
 .footer__column--brand {
@@ -86,6 +87,7 @@
   display: flex;
   gap: 0.75rem;
   margin-top: 0.5rem;
+ 
 }
 
 .footer__social-link {
@@ -96,7 +98,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
   font-size: 0.75rem;
   color: #ffffff !important; /* garante branco por padrão */
   font-weight: 600;
@@ -117,6 +118,16 @@
   transition: fill 0.2s, color 0.2s;
 }
 
+
+.footer__link__map {
+  color: #9CA3AF;
+  text-decoration: none;
+}
+
+.footer__link__map:hover {
+  color: #ffffff;
+}
+
 .footer__list {
   list-style: none;
   padding: 0;
@@ -135,7 +146,10 @@
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
+  text-decoration: none;
 }
+
+
 
 .footer__contact-icon {
   font-size: 0.9rem;
@@ -145,6 +159,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 }
 
 .footer__contact-icon svg {
@@ -152,10 +167,12 @@
   fill: #9CA3AF !important;
   width: 1em;
   height: 1em;
+  text-decoration: none;
 }
 
 .footer__contact-icon svg path {
   fill: #9CA3AF !important;
+  text-decoration: none;
 }
 
 .material-symbols-rounded {
@@ -244,8 +261,8 @@
 
 .footer__blog-cta:hover {
   background-color: #fff;
- color: #26437b;
- transition: all 0.3s;
+  color: #26437b !important;
+  transition: all 0.3s;
 }
 
 .footer__copyright {
@@ -272,25 +289,23 @@
 }
 
 @media (max-width: 1024px) {
+  /* Tablet: ajustar colunas sem mover o mapa de posição */
   .footer__container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-  }
-  
-  .footer__column--map {
-    grid-column: span 2;
-    min-height: 250px;
+    gap: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
+  /* Mobile: 2x2 square of text blocks, map below spanning full width */
   .footer__container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
   
   .footer__column--map {
-    grid-column: span 1;
-    min-height: 250px;
+    grid-column: 1 / -1; /* span full width beneath the 2x2 grid */
+    min-height: 220px;
+    order: 999; /* ensure appears after text blocks when needed */
   }
 }

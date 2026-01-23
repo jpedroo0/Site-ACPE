@@ -53,7 +53,7 @@ function Footer() {
               <span className="footer__contact-icon">
                 <FontAwesomeIcon icon={faLocationDot} />
               </span>
-              <span>Ver no Google Maps</span>
+              <a className= "footer__link__map" href="https://www.google.com/maps/place/ACPE+Consultoria+-+Plano+de+Neg%C3%B3cios,+Pesquisa+de+Mercado+e+Gest%C3%A3o+Empresarial/@-18.9185039,-48.2607495,17z/data=!3m2!4b1!5s0x94a44574eb2d5de3:0x11d136c87e5645a1!4m2!3m1!1s0x94a44574eb2d5de3:0x11d136c87e5645a1?entry=ttu" target="_blank" rel="noopener noreferrer">Ver no Google Maps</a>
             </li>
             <li className="footer__contact-item">
               <span className="footer__contact-icon">
@@ -69,7 +69,7 @@ function Footer() {
             </li>
           </ul>
         </div>
-        
+
         <div className="footer__column footer__column--map">
           <div className="footer__map-container">
             <iframe
@@ -85,7 +85,7 @@ function Footer() {
             ></iframe>
           </div>
         </div>
-        
+
         <div className="footer__column">
           <h4 className="footer__title">Nosso Blog</h4>
           <p className="footer__blog-description">

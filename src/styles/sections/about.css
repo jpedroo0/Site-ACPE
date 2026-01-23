@@ -158,20 +158,6 @@
   z-index: 15;
 }
 
-.about__dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(30, 58, 138, 0.25);
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.18s;
-}
-
-.about__dot--active {
-  background: #1e3a8a;
-  transform: scale(1.05);
-}
 
 @media (max-width: 768px) {
   .about__dots {

@@ -163,14 +163,6 @@
   fill: #EFC11D;
 }
 
-.service-card__link--yellow {
-  color: #EFC11D;
-}
-
-.service-card__link--yellow:hover {
-  color: #1e3a8a;
-}
-
 @media (max-width: 768px) {
   .services__grid {
     grid-template-columns: 1fr;

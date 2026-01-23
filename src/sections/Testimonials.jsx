@@ -172,7 +172,8 @@ function Testimonials() {
     // Limita o drag para não ultrapassar muito os limites
     const maxDrag = 300 // Limite máximo de arrasto em pixels
     const limitedDiff = Math.max(-maxDrag, Math.min(maxDrag, diff))
-    setDragOffset(-limitedDiff)
+    // sinal invertido para que arrastar para a esquerda mova o carrossel para a esquerda
+    setDragOffset(limitedDiff)
   }
 
   // Event listeners globais para melhorar o drag
@@ -184,7 +185,8 @@ function Testimonials() {
       const diff = startX - e.pageX
       const maxDrag = 300 // Limite máximo de arrasto em pixels
       const limitedDiff = Math.max(-maxDrag, Math.min(maxDrag, diff))
-      setDragOffset(-limitedDiff)
+      // manter sinal consistente com handleMouseMove
+      setDragOffset(limitedDiff)
     }
     
     const handleGlobalMouseUp = (e) => {
@@ -230,7 +232,7 @@ function Testimonials() {
     const diff = startX - e.touches[0].pageX
     const maxDrag = 300 // Limite máximo de arrasto
     const limitedDiff = Math.max(-maxDrag, Math.min(maxDrag, diff))
-    setDragOffset(-limitedDiff)
+    setDragOffset(limitedDiff)
   }
 
   const handleTouchEnd = (e) => {
@@ -282,7 +284,7 @@ function Testimonials() {
               <p className="testimonial-card__quote">"{testimonial.quote}"</p>
               <div className="testimonial-card__footer">
                 <div className="testimonial-card__author">
-                  <div className="testimonial-card__avatar">{testimonial.avatar}</div>
+                  <img className="testimonial-card__avatar" src={testimonial.avatar} alt={testimonial.name}s />
                   <div className="testimonial-card__info">
                     <div className="testimonial-card__name">{testimonial.name}</div>
                     <div className="testimonial-card__role">{testimonial.role}</div>

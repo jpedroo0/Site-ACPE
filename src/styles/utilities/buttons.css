@@ -18,6 +18,7 @@
   background: #EFC11D;
   color: #FFFFFF;
   border: none;
+  text-decoration: none;
 }
 
 .btn--primary:hover {
@@ -30,6 +31,7 @@
   color: #374151;
   border: 2px solid #E5E7EB;
   transition: all 0.3s;
+  text-decoration: none;
 }
 
 .btn--secondary:hover {

@@ -1,18 +1,14 @@
 /* Navbar Component */
 .navbar {
   width: 100%;
-  padding: 1.3rem 5rem;
+  padding: 0.8rem 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   background-color: #1B2943;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative; /* desfixado: não fica mais fixo no topo */
   box-sizing: border-box;
-  z-index: 1000;
   font-weight: 100;
 }
 
